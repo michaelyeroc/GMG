@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField]
-    Dropdown m_SceneDropDown;
+    Dropdown m_SceneDropDown = null;
 
     string m_SelectedSceneName;
 
