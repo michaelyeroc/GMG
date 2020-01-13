@@ -5,6 +5,24 @@ namespace Hawk
     [RequireComponent(typeof(Rigidbody2D))]
     public class HawkPaddle : MonoBehaviour
     {
+        #region Singleton Paddle
+        private static HawkPaddle instance;
+
+        public static HawkPaddle Instance => instance;
+
+        private void Awake()
+        {
+            if (instance != null)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                instance = this;
+            }
+        }
+        #endregion
+
         private Rigidbody2D paddle;
         // The paddle speed of the script in unity controls
         // the actual paddle speed. This seems to have no effect
