@@ -28,7 +28,7 @@ namespace Hawk
         // the actual paddle speed. This seems to have no effect
         // so maybe I'm doing something wrong
         [SerializeField]
-        private float m_PaddleSpeed = 15f;
+        private readonly float m_PaddleSpeed = 15f;
 
         // Start is called before the first frame update
         private void Start()
@@ -52,6 +52,33 @@ namespace Hawk
                 newVelocity.x += m_PaddleSpeed;
 
             paddle.velocity = newVelocity;
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.tag == "HawkBall")
+            {
+                Rigidbody2D ballRb = collision.gameObject.GetComponent<Rigidbody2D>();
+
+                Vector3 hitPoint = collision.contacts[0].point;
+
+                Vector3 paddleCenter = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y);
+
+                ballRb.velocity = Vector2.zero;
+
+                //float difference = paddleCenter.x - hitPoint.x;
+
+                float speed = HawkBallsManager.Instance.initialBallSpeed;
+                if (hitPoint.x < paddleCenter.x)
+                {
+                    // left side of paddle
+                    ballRb.velocity = new Vector2(-speed, speed);
+                }
+                else
+                {
+                    ballRb.velocity = new Vector2(speed, speed);
+                }
+            }
         }
     }
 }

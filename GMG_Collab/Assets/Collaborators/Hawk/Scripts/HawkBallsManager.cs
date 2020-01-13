@@ -27,10 +27,11 @@ namespace Hawk
 
         [SerializeField]
         private HawkBall ballPrefab;
+
         private HawkBall initialBall;
         private Rigidbody2D initialBallRB;
 
-        public float initialBallSpeed = 15;
+        public float initialBallSpeed;
 
         private void Start()
         {
@@ -48,10 +49,9 @@ namespace Hawk
                 initialBall.transform.position = ballPosition;
             }
 
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.Space) && !HawkGameManger.Instance.isgameStarted)
             {
-                initialBallRB.isKinematic = false;
-                initialBallRB.AddForce(new Vector2(0, initialBallSpeed));
+                initialBall.LaunchBall();
 
                 HawkGameManger.Instance.isgameStarted = true;
             }
