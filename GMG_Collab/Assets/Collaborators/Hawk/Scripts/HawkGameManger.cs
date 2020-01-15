@@ -23,5 +23,10 @@ namespace Hawk
         #endregion
 
         public bool isgameStarted { get; set; }
+
+        private void Start()
+        {
+            Screen.SetResolution(540, 900, false);
+        }
     }
 }
