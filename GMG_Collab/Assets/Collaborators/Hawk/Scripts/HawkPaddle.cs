@@ -28,7 +28,7 @@ namespace Hawk
         // the actual paddle speed. This seems to have no effect
         // so maybe I'm doing something wrong
         [SerializeField]
-        private readonly float m_PaddleSpeed = 15f;
+        private readonly float m_PaddleSpeed = 8f;
 
         // Start is called before the first frame update
         private void Start()
