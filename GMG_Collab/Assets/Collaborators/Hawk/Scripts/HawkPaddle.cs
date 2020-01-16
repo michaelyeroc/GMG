@@ -66,17 +66,17 @@ namespace Hawk
 
                 ballRb.velocity = Vector2.zero;
 
-                //float difference = paddleCenter.x - hitPoint.x;
+                float difference = paddleCenter.x - hitPoint.x;
 
                 float speed = HawkBallsManager.Instance.initialBallSpeed;
                 if (hitPoint.x < paddleCenter.x)
                 {
                     // left side of paddle
-                    ballRb.velocity = new Vector2(-speed, speed);
+                    ballRb.velocity = new Vector2(-Mathf.Abs(difference * speed), speed);
                 }
                 else
                 {
-                    ballRb.velocity = new Vector2(speed, speed);
+                    ballRb.velocity = new Vector2(Mathf.Abs(difference * speed), speed);
                 }
             }
         }
