@@ -33,7 +33,7 @@ namespace Hawk
         public Color[] brickColors;
         private GameObject bricksContainer;
         // Initial position for first brick
-        private float initialBrickSpawnX = -3f;
+        private float initialBrickSpawnX = -3.5f;
         // In Unity it sees it as 3.8 Y axis which is what we want
         // but here it needs to be one higher...
         private float initialBrickSpawnY = 4.8f;

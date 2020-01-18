@@ -47,7 +47,7 @@ namespace Hawk
             GameObject effect = Instantiate(destoryEffect.gameObject, effectPosition, Quaternion.identity);
 
             MainModule mm = effect.GetComponent<ParticleSystem>().main;
-            mm.startColor = Color.red;
+            mm.startColor = sr.color;
             Destroy(effect, destoryEffect.main.startLifetime.constant);
         }
 
