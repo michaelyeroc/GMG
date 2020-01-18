@@ -5,20 +5,18 @@ namespace Hawk
 {
     public class HawkBallsManager : MonoBehaviour
     {
-        #region Singleton Ball Manager
-        private static HawkBallsManager instance;
-
-        public static HawkBallsManager Instance => instance;
+        #region Singleton
+        public static HawkBallsManager Instance { get; private set; }
 
         private void Awake()
         {
-            if (instance != null)
+            if (Instance != null)
             {
                 Destroy(gameObject);
             }
             else
             {
-                instance = this;
+                Instance = this;
             }
         }
         #endregion
@@ -33,33 +31,38 @@ namespace Hawk
 
         public float initialBallSpeed;
 
+        private HawkGameManger gameManager { get; set; }
+        private HawkPaddle paddle { get; set; }
+
         private void Start()
         {
+            gameManager = HawkGameManger.Instance;
+            paddle = HawkPaddle.Instance;
             InitBall();
         }
 
         private void Update()
         {
-            if (!HawkGameManger.Instance.isgameStarted)
+            if (!gameManager.isgameStarted)
             {
                 // stick ball to paddle if game is not started
-                Vector3 paddlePosition = HawkPaddle.Instance.gameObject.transform.position;
+                Vector3 paddlePosition = paddle.gameObject.transform.position;
                 Vector3 ballPosition = new Vector3(paddlePosition.x, paddlePosition.y + .27f, 0);
 
                 initialBall.transform.position = ballPosition;
             }
 
-            if (Input.GetKey(KeyCode.Space) && !HawkGameManger.Instance.isgameStarted)
+            if (Input.GetKey(KeyCode.Space) && !gameManager.isgameStarted)
             {
                 initialBall.LaunchBall();
-
-                HawkGameManger.Instance.isgameStarted = true;
+                // The game is afoot
+                gameManager.isgameStarted = true;
             }
         }
 
         private void InitBall()
         {
-            Vector3 paddlePosition = HawkPaddle.Instance.gameObject.transform.position;
+            Vector3 paddlePosition = paddle.gameObject.transform.position;
 
             Vector3 startingPosition = new Vector3(paddlePosition.x, paddlePosition.y + .27f, 0);
 

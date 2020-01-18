@@ -30,10 +30,13 @@ namespace Hawk
         [SerializeField]
         private readonly float m_PaddleSpeed = 8f;
 
+        private HawkBallsManager ballManager { get; set; }
+
         // Start is called before the first frame update
         private void Start()
         {
             paddle = GetComponent<Rigidbody2D>();
+            ballManager = HawkBallsManager.Instance;
         }
 
         // Update is called once per frame
@@ -68,7 +71,7 @@ namespace Hawk
 
                 float difference = paddleCenter.x - hitPoint.x;
 
-                float speed = HawkBallsManager.Instance.initialBallSpeed;
+                float speed = ballManager.initialBallSpeed;
                 if (hitPoint.x < paddleCenter.x)
                 {
                     // left side of paddle

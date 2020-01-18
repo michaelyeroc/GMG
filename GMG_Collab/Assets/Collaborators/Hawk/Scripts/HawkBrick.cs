@@ -13,9 +13,16 @@ namespace Hawk
 
         public static event Action<HawkBrick> OnBrickDestruction;
 
+        private HawkBrickManager brickManager { get; set; }
+
         private void Awake()
         {
             sr = GetComponent<SpriteRenderer>();
+        }
+
+        private void Start()
+        {
+            brickManager = HawkBrickManager.Instance;
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -36,7 +43,7 @@ namespace Hawk
             }
             else
             {
-                sr.sprite = HawkBrickManager.Instance.sprites[hitPoints - 1];
+                sr.sprite = brickManager.sprites[hitPoints - 1];
             }
         }
 

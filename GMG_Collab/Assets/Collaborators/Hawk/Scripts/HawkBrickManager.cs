@@ -6,27 +6,23 @@ namespace Hawk
 {
     public class HawkBrickManager : MonoBehaviour
     {
-        #region Singleton Brick Manager
-        private static HawkBrickManager instance;
-
-        public static HawkBrickManager Instance => instance;
+        #region Singleton
+        public static HawkBrickManager Instance { get; private set; }
 
         private void Awake()
         {
-            if (instance != null)
+            if (Instance != null)
             {
                 Destroy(gameObject);
             }
             else
             {
-                instance = this;
+                Instance = this;
             }
         }
         #endregion
 
         public Sprite[] sprites;
-
-        public List<int[,]> levels { get; set; }
 
         public List<HawkBrick> remainingBricks { get; set; }
         public HawkBrick brickPrefab;
@@ -42,19 +38,24 @@ namespace Hawk
 
         private int initialBrickCount { get; set; }
 
+        // Levels and column information from
+        // the game manager
+        private List<int[,]> levels;
         private int maxRows = 17;
         private int maxCols = 12;
-        // level selector we can change in unity
-        // This should really be controlled by the
-        // GameMangeger script.
-        // TODO(shf): Figure out how to move to game manager
-        public int currentLevel;
+        private int currentLevel;
 
         private void Start()
         {
+            // Get a reference to the levels
+            HawkGameManger manger = HawkGameManger.Instance;
+            levels = manger.levels;
+            maxRows = manger.maxRows;
+            maxCols = manger.maxCols;
+            currentLevel = manger.currentLevel;
+
             bricksContainer = new GameObject("bricksContainer");
             remainingBricks = new List<HawkBrick>();
-            levels = loadLevels();
             makeBricks();
         }
 
@@ -96,44 +97,6 @@ namespace Hawk
             initialBrickCount = remainingBricks.Count;
         }
 
-        private List<int[,]> loadLevels()
-        {
-            TextAsset text = Resources.Load("levels") as TextAsset;
-
-            string[] rows = text.text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-
-            List<int[,]> levelsTemp = new List<int[,]>();
-            int[,] currentLevel = new int[maxRows, maxCols];
-
-            int currentRow = 0;
-
-            for (int row = 0; row < rows.Length; row++)
-            {
-                string line = rows[row];
-
-                if (line.IndexOf("--") == -1)
-                {
-                    // parsing row
-                    string[] bricks = line.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                    for (int col = 0; col < bricks.Length; col++)
-                    {
-                        currentLevel[currentRow, col] = int.Parse(bricks[col]);
-                    }
-
-                    currentRow++;
-                }
-                else
-                {
-                    // end of current level
-                    // add the matrix to the list and continue the loop
-
-                    currentRow = 0;
-                    levelsTemp.Add(currentLevel);
-                    currentLevel = new int[maxRows, maxCols];
-                }
-            }
-
-            return levelsTemp;
-        }
+        
     }
 }
