@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using static UnityEngine.ParticleSystem;
 
 namespace Hawk
 {
@@ -8,13 +9,13 @@ namespace Hawk
         private SpriteRenderer sr;
 
         public int hitPoints = 1;
+        public ParticleSystem destoryEffect;
 
         public static event Action<HawkBrick> OnBrickDestruction;
 
-        private void Start()
+        private void Awake()
         {
             sr = GetComponent<SpriteRenderer>();
-            sr.sprite = HawkBrickManager.Instance.sprites[hitPoints - 1]; // will be deleted later and set in Init.
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -30,13 +31,32 @@ namespace Hawk
             if (hitPoints <= 0)
             {
                 OnBrickDestruction?.Invoke(this);
-                // SpawnDestroyEffect();
+                DestroyEffect();
                 Destroy(gameObject);
             }
             else
             {
-                // TODO(shf): Change the sprite when implemented levels
+                sr.sprite = HawkBrickManager.Instance.sprites[hitPoints - 1];
             }
+        }
+
+        private void DestroyEffect()
+        {
+            Vector3 brickPosition = gameObject.transform.position;
+            Vector3 effectPosition = new Vector3(brickPosition.x, brickPosition.y, brickPosition.z - 0.2f);
+            GameObject effect = Instantiate(destoryEffect.gameObject, effectPosition, Quaternion.identity);
+
+            MainModule mm = effect.GetComponent<ParticleSystem>().main;
+            mm.startColor = Color.red;
+            Destroy(effect, destoryEffect.main.startLifetime.constant);
+        }
+
+        internal void Init(Transform container, Sprite sprite, Color color, int hp)
+        {
+            transform.SetParent(container);
+            sr.sprite = sprite;
+            sr.color = color;
+            hitPoints = hp;
         }
     }
 }
