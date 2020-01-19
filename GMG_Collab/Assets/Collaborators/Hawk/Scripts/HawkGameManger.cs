@@ -26,6 +26,7 @@ namespace Hawk
         #endregion
 
         public GameObject gameOverScreen;
+        public GameObject victoryScreen;
 
         public int availableLives = 3;
         public int lives { get; set; }
@@ -48,6 +49,7 @@ namespace Hawk
 
             Screen.SetResolution(540, 900, false);
             HawkBall.OnDeath += OnDeath;
+            HawkBrick.OnBrickDestruction += brickDestruction;
         }
 
         private List<int[,]> loadLevels()
@@ -105,8 +107,33 @@ namespace Hawk
                     // reload level
                     ballManager.resetBalls();
                     isgameStarted = false;
-                    brickManager.reloadLevel();
+                    brickManager.reloadBricks();
                 }
+            }
+        }
+
+        void brickDestruction(HawkBrick brick)
+        {
+            if (brickManager.remainingBricks.Count <= 0)
+            {
+                // cleared level
+                ballManager.resetBalls();
+                isgameStarted = false;
+                loadNextLevel();
+            }
+        }
+
+        void loadNextLevel()
+        {
+            currentLevel++;
+            if (currentLevel >= levels.Count)
+            {
+                victoryScreen.SetActive(true);
+            }
+            else
+            {
+                brickManager.setLevel(currentLevel);
+                brickManager.reloadBricks();
             }
         }
 

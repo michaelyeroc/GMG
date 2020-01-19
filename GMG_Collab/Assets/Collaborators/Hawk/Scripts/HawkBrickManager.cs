@@ -97,7 +97,7 @@ namespace Hawk
             initialBrickCount = remainingBricks.Count;
         }
 
-        internal void reloadLevel()
+        internal void reloadBricks()
         {
             clearRemainingBricks();
             makeBricks();
@@ -109,6 +109,11 @@ namespace Hawk
             {
                 Destroy(brick.gameObject);
             }
+        }
+
+        internal void setLevel(int level)
+        {
+            currentLevel = level;
         }
     }
 }
