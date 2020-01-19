@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 namespace Hawk
 {
@@ -24,6 +25,10 @@ namespace Hawk
         }
         #endregion
 
+        public GameObject gameOverScreen;
+
+        public int availableLives = 3;
+        public int lives { get; set; }
         public bool isgameStarted { get; set; }
         public List<int[,]> levels { get; set; }
         public readonly int maxRows = 17;
@@ -31,9 +36,18 @@ namespace Hawk
         // level selector we can change in unity
         public int currentLevel;
 
+        // Game Managers
+        private HawkBallsManager ballManager;
+        private HawkBrickManager brickManager;
+
         private void Start()
         {
+            lives = availableLives;
+            ballManager = HawkBallsManager.Instance;
+            brickManager = HawkBrickManager.Instance;
+
             Screen.SetResolution(540, 900, false);
+            HawkBall.OnDeath += OnDeath;
         }
 
         private List<int[,]> loadLevels()
@@ -73,6 +87,39 @@ namespace Hawk
             }
 
             return levelsTemp;
+        }
+
+        void OnDeath(HawkBall ball)
+        {
+            if (ballManager.balls.Count <= 0)
+            {
+                lives--;
+                if (lives < 1)
+                {
+                    gameOverScreen.SetActive(true);
+                }
+                else
+                {
+                    // reset balls
+                    // stop game
+                    // reload level
+                    ballManager.resetBalls();
+                    isgameStarted = false;
+                    brickManager.reloadLevel();
+                }
+            }
+        }
+
+        private void OnDisable()
+        {
+            // unsubscribe from event
+            HawkBall.OnDeath -= OnDeath;
+        }
+
+        // Restart wired up to death screen button
+        public void RestartGame()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }

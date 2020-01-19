@@ -43,7 +43,7 @@ namespace Hawk
         private List<int[,]> levels;
         private int maxRows = 17;
         private int maxCols = 12;
-        private int currentLevel;
+        public int currentLevel;
 
         private void Start()
         {
@@ -55,12 +55,12 @@ namespace Hawk
             currentLevel = manger.currentLevel;
 
             bricksContainer = new GameObject("bricksContainer");
-            remainingBricks = new List<HawkBrick>();
             makeBricks();
         }
 
         private void makeBricks()
         {
+            remainingBricks = new List<HawkBrick>();
             int[,] level = levels[currentLevel];
 
             float currentSpawnX = initialBrickSpawnX;
@@ -97,6 +97,18 @@ namespace Hawk
             initialBrickCount = remainingBricks.Count;
         }
 
-        
+        internal void reloadLevel()
+        {
+            clearRemainingBricks();
+            makeBricks();
+        }
+
+        private void clearRemainingBricks()
+        {
+            foreach (HawkBrick brick in remainingBricks)
+            {
+                Destroy(brick.gameObject);
+            }
+        }
     }
 }

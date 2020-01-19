@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Hawk
 {
     public class HawkBall : MonoBehaviour
     {
+        public static event Action<HawkBall> OnDeath;
+
         [SerializeField]
         private Rigidbody2D ballRigidBody2D;
 
@@ -26,6 +29,12 @@ namespace Hawk
         public void LaunchBall()
         {
             ballRigidBody2D.AddForce(new Vector2(0, ballManager.initialBallSpeed));
+        }
+
+        internal void Die()
+        {
+            Destroy(gameObject, 0.3f);
+            OnDeath?.Invoke(this);
         }
     }
 }

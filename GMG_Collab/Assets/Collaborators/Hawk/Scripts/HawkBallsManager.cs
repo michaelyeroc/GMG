@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Hawk
@@ -73,6 +74,17 @@ namespace Hawk
             {
                 initialBall
             };
+        }
+
+        internal void resetBalls()
+        {
+            // Destory all then init start ball
+            foreach(var ball in balls)
+            {
+                Destroy(ball.gameObject);
+            }
+
+            InitBall();
         }
     }
 }

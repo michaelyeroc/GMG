@@ -37,6 +37,8 @@ namespace Hawk
 
             if (hitPoints <= 0)
             {
+                brickManager.remainingBricks.Remove(this);
+
                 OnBrickDestruction?.Invoke(this);
                 DestroyEffect();
                 Destroy(gameObject);
