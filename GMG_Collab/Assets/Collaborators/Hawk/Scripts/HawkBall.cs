@@ -5,7 +5,7 @@ namespace Hawk
 {
     public class HawkBall : MonoBehaviour
     {
-        public static event Action<HawkBall> OnDeath;
+        public static event Action<HawkBall> onDeath;
 
         [SerializeField]
         private Rigidbody2D ballRigidBody2D;
@@ -34,7 +34,7 @@ namespace Hawk
         internal void Die()
         {
             Destroy(gameObject, 0.3f);
-            OnDeath?.Invoke(this);
+            onDeath?.Invoke(this);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 namespace Hawk
 {
@@ -26,6 +27,12 @@ namespace Hawk
         public List<HawkBrick> remainingBricks { get; set; }
         public HawkBrick brickPrefab;
         public Color[] brickColors;
+        public int initialBrickCount { get; set; }
+
+        // TODO: Look into not making these static I think.
+        // Not sure if static is the best way for this.
+        public static event Action onBricksLoaded;
+
         private GameObject bricksContainer;
         // Initial position for first brick
         private float initialBrickSpawnX = -3.5f;
@@ -34,8 +41,6 @@ namespace Hawk
         private float initialBrickSpawnY = 4.8f;
         // TODO(shf): The brick width plus a minor gap Make dynamic
         private float shiftAmount = 1f;
-
-        private int initialBrickCount { get; set; }
 
         // Levels and column information from
         // the game manager
@@ -94,6 +99,8 @@ namespace Hawk
                 currentSpawnY -= shiftAmount;
             }
             initialBrickCount = remainingBricks.Count;
+
+            onBricksLoaded?.Invoke();
         }
 
         internal void reloadBricks()

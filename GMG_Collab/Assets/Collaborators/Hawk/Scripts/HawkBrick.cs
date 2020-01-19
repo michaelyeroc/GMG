@@ -11,7 +11,7 @@ namespace Hawk
         public int hitPoints = 1;
         public ParticleSystem destoryEffect;
 
-        public static event Action<HawkBrick> OnBrickDestruction;
+        public static event Action<HawkBrick> onBrickDestruction;
 
         private HawkBrickManager brickManager { get; set; }
 
@@ -39,7 +39,7 @@ namespace Hawk
             {
                 brickManager.remainingBricks.Remove(this);
 
-                OnBrickDestruction?.Invoke(this);
+                onBrickDestruction?.Invoke(this);
                 DestroyEffect();
                 Destroy(gameObject);
             }

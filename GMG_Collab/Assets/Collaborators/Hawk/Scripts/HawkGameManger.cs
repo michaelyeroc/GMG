@@ -34,6 +34,8 @@ namespace Hawk
         public GameObject gameOverScreen;
         public GameObject victoryScreen;
 
+        public static event Action<int> onLifeLost;
+
         public int availableLives = 3;
         public int lives { get; set; }
         public bool isgameStarted { get; set; }
@@ -54,8 +56,8 @@ namespace Hawk
             brickManager = HawkBrickManager.Instance;
 
             Screen.SetResolution(540, 900, false);
-            HawkBall.OnDeath += OnDeath;
-            HawkBrick.OnBrickDestruction += brickDestruction;
+            HawkBall.onDeath += onDeath;
+            HawkBrick.onBrickDestruction += brickDestruction;
         }
 
         private List<int[,]> loadLevels()
@@ -97,7 +99,7 @@ namespace Hawk
             return levelsTemp;
         }
 
-        void OnDeath(HawkBall ball)
+        void onDeath(HawkBall ball)
         {
             if (ballManager.balls.Count <= 0)
             {
@@ -108,6 +110,7 @@ namespace Hawk
                 }
                 else
                 {
+                    onLifeLost?.Invoke(lives);
                     // reset balls
                     // stop game
                     // reload level
@@ -146,7 +149,8 @@ namespace Hawk
         private void OnDisable()
         {
             // unsubscribe from event
-            HawkBall.OnDeath -= OnDeath;
+            HawkBall.onDeath -= onDeath;
+            HawkBrick.onBrickDestruction -= brickDestruction;
         }
 
         // Restart wired up to death screen button
