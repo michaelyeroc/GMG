@@ -3,6 +3,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
+/*
+ * This game was made following Damage Software's tutorial
+ * on youtube. Besides a little bit of refactoring and small
+ * changes the majority of this code is straight from the tutorial.
+ * 
+ */
 namespace Hawk
 {
     public class HawkGameManger : MonoBehaviour
