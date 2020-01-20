@@ -86,5 +86,18 @@ namespace Hawk
 
             InitBall();
         }
+
+        internal void spawnBalls(Vector3 position, int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                HawkBall spawnedBall = Instantiate(ballPrefab, position, Quaternion.identity) as HawkBall;
+
+                Rigidbody2D spawnedBallRb = spawnedBall.GetComponent<Rigidbody2D>();
+                spawnedBallRb.AddForce(new Vector2(0, initialBallSpeed));
+
+                balls.Add(spawnedBall);
+            }
+        }
     }
 }
