@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System;
+using System.Collections.Generic;
 
 namespace Hawk
 {
@@ -20,14 +22,12 @@ namespace Hawk
         }
         #endregion
 
-        // Start is called before the first frame update
-        void Start()
-        {
-        }
+        public List<HawkCollectable> availableBuffs;
+        public List<HawkCollectable> availableDeBuffs;
 
-        // Update is called once per frame
-        void Update()
-        {
-        }
+        [Range(0, 100)]
+        public float buffChance;
+        [Range(0, 100)]
+        public float debuffChance;
     }
 }
