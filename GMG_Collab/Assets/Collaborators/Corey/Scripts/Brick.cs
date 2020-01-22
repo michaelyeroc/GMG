@@ -17,5 +17,10 @@ namespace Coreys_Work
         {
 
         }
+
+        public void DropPowerUp()
+        {
+            GameManager.TheGameManager.SpawnPowerUp(transform.position);
+        }
     }
 }
