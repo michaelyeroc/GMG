@@ -93,9 +93,6 @@ namespace Garys_Work
 		public void StartGame() 
 		{	
 			activeEventManager.GetComponent<EventManager>().SignalLevelStart();
-
-			EventManager.DebugLog("Start()", "unable to find 'EventManager' reporting object: " + transform.name);
-
 		}
 		#endregion
 	}
