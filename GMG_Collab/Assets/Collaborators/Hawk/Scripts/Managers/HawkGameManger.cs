@@ -108,21 +108,19 @@ namespace Hawk
             {
                 lives--;
                 collectableManager.resetCollectables();
+                // reset balls
+                // stop game
+                // reload level
+                ballManager.resetBalls();
+
+                onLifeLost?.Invoke(lives);
+
+                isgameStarted = false;
+                brickManager.reloadBricks();
 
                 if (lives < 1)
                 {
                     gameOverScreen.SetActive(true);
-                }
-                else
-                {
-                    onLifeLost?.Invoke(lives);
-                    // reset balls
-                    // stop game
-                    // reload level
-                    ballManager.resetBalls();
-
-                    isgameStarted = false;
-                    brickManager.reloadBricks();
                 }
             }
         }
