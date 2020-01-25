@@ -25,13 +25,13 @@ namespace Hawk
             brickManager = HawkBrickManager.Instance;
         }
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        void OnCollisionEnter2D(Collision2D collision)
         {
             HawkBall ball = collision.gameObject.GetComponent<HawkBall>();
             ApplyBallCollision(ball);
         }
 
-        private void ApplyBallCollision(HawkBall ball)
+        void ApplyBallCollision(HawkBall ball)
         {
             hitPoints--;
 
@@ -49,7 +49,7 @@ namespace Hawk
             }
         }
 
-        private void DestroyEffect()
+        void DestroyEffect()
         {
             Vector3 brickPosition = gameObject.transform.position;
             Vector3 effectPosition = new Vector3(brickPosition.x, brickPosition.y, brickPosition.z - 0.2f);

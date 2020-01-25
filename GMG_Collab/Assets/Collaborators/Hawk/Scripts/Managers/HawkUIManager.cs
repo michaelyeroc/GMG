@@ -24,7 +24,7 @@ namespace Hawk
             brickManager = HawkBrickManager.Instance;
 
             // Event subscriptions
-            HawkBrick.onBrickDestruction += onBrickDestruciton;
+            HawkBrick.onBrickDestruction += onBrickDestruction;
             HawkBrickManager.onBricksLoaded += onBricksLoaded;
             HawkGameManger.onLifeLost += onLifeLost;
         }
@@ -61,7 +61,7 @@ namespace Hawk
             livesText.text = $"LIVES: {lives}";
         }
 
-        void onBrickDestruciton(HawkBrick obj)
+        void onBrickDestruction(HawkBrick obj)
         {
             updateRemainingBricks();
             updateScoreText(10);
@@ -81,7 +81,7 @@ namespace Hawk
 
         private void OnDisable()
         {
-            HawkBrick.onBrickDestruction -= onBrickDestruciton;
+            HawkBrick.onBrickDestruction -= onBrickDestruction;
             HawkBrickManager.onBricksLoaded -= onBricksLoaded;
             HawkGameManger.onLifeLost -= onLifeLost;
         }

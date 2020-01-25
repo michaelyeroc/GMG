@@ -22,7 +22,7 @@ namespace Hawk
         }
         #endregion
 
-        public List<HawkBall> balls { get; set; }
+        public List<HawkBall> balls;
 
         [SerializeField]
         private HawkBall ballPrefab;
@@ -39,6 +39,7 @@ namespace Hawk
         {
             gameManager = HawkGameManger.Instance;
             paddle = HawkPaddle.Instance;
+            balls = new List<HawkBall>();
             InitBall();
         }
 
@@ -69,11 +70,8 @@ namespace Hawk
 
             initialBall = Instantiate(ballPrefab, startingPosition, Quaternion.identity);
             initialBallRB = initialBall.GetComponent<Rigidbody2D>();
-
-            balls = new List<HawkBall>
-            {
-                initialBall
-            };
+            
+            balls.Add(initialBall);
         }
 
         internal void resetBalls()
@@ -96,6 +94,11 @@ namespace Hawk
                 Rigidbody2D spawnedBallRb = spawnedBall.GetComponent<Rigidbody2D>();
                 spawnedBallRb.AddForce(new Vector2(0, initialBallSpeed));
 
+                // This is causing Invalid operation exceptions while the game is running
+                // producing some funny results. Also it's only ever trying to spawn more balls
+                // off the initial ball which if it has died cause a null pointer and no new balls.
+                // Which is interesting because it's supposed to go through each ball but the invalid
+                // operation exception much be causing some issues too
                 balls.Add(spawnedBall);
             }
         }

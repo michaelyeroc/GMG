@@ -821,9 +821,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7924074da8f12ba428b63610bdda5ad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  balls: []
   ballPrefab: {fileID: 6361173715191957493, guid: 86de488a745d5804793a4676bdb1b93b,
     type: 3}
-  initialBallSpeed: 7
+  initialBallSpeed: 5
 --- !u!1 &673058261
 GameObject:
   m_ObjectHideFlags: 0
@@ -1501,7 +1502,7 @@ MonoBehaviour:
   availableBuffs:
   - {fileID: 1691735693592588424, guid: ebea1f4e28526d34eb7164db878d6afd, type: 3}
   availableDeBuffs: []
-  buffChance: 50
+  buffChance: 10
   debuffChance: 0
 --- !u!1 &1319933695
 GameObject:

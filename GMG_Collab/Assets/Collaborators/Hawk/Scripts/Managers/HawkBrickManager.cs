@@ -33,6 +33,8 @@ namespace Hawk
         // Not sure if static is the best way for this.
         public static event Action onBricksLoaded;
 
+        public int currentLevel;
+
         private GameObject bricksContainer;
         // Initial position for first brick
         private float initialBrickSpawnX = -3.5f;
@@ -47,12 +49,17 @@ namespace Hawk
         private List<int[,]> levels;
         private int maxRows = 17;
         private int maxCols = 12;
-        public int currentLevel;
+
+        private HawkCollectableManager collectableManager;
 
         private void Start()
         {
             // Get a reference to the levels
             HawkGameManger manger = HawkGameManger.Instance;
+            collectableManager = HawkCollectableManager.Instance;
+
+            // event subscription
+            HawkBrick.onBrickDestruction += onBrickDestruction;
             levels = manger.levels;
             maxRows = manger.maxRows;
             maxCols = manger.maxCols;
@@ -109,7 +116,7 @@ namespace Hawk
             makeBricks();
         }
 
-        private void clearRemainingBricks()
+        void clearRemainingBricks()
         {
             foreach (HawkBrick brick in remainingBricks)
             {
@@ -120,6 +127,54 @@ namespace Hawk
         internal void setLevel(int level)
         {
             currentLevel = level;
+        }
+
+        void onBrickDestruction(HawkBrick brick)
+        {
+            // TODO(shf): Look into other alternatives to this
+            onBrickDestroy(brick);
+        }
+
+        internal void onBrickDestroy(HawkBrick brick)
+        {
+            float buffSpawnChance = UnityEngine.Random.Range(0, 100f);
+            float debuffSpawnChance = UnityEngine.Random.Range(0, 100f);
+
+            bool buffSpawned = false;
+
+            if (buffSpawnChance <= collectableManager.buffChance)
+            {
+                HawkCollectable newBuff = spawnBuff(brick);
+            }
+            if (debuffSpawnChance <= collectableManager.debuffChance && !buffSpawned)
+            {
+                HawkCollectable newDeBuff = spawnDebuff(brick);
+            }
+        }
+
+        internal HawkCollectable spawnBuff(HawkBrick brick)
+        {
+            List<HawkCollectable> buffs = collectableManager.availableBuffs;
+
+            int buffIndex = UnityEngine.Random.Range(0, buffs.Count);
+
+            HawkCollectable prefab = buffs[buffIndex];
+            return Instantiate(prefab, brick.transform.position, Quaternion.identity) as HawkCollectable;
+        }
+
+        internal HawkCollectable spawnDebuff(HawkBrick brick)
+        {
+            List<HawkCollectable> debuffs = collectableManager.availableDeBuffs;
+
+            int buffIndex = UnityEngine.Random.Range(0, debuffs.Count);
+
+            HawkCollectable prefab = debuffs[buffIndex];
+            return Instantiate(prefab, brick.transform.position, Quaternion.identity) as HawkCollectable;
+        }
+
+        private void OnDisable()
+        {
+            HawkBrick.onBrickDestruction -= onBrickDestruction;
         }
     }
 }
