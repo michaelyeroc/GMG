@@ -48,12 +48,14 @@ namespace Hawk
         // Game Managers
         private HawkBallsManager ballManager;
         private HawkBrickManager brickManager;
+        private HawkCollectableManager collectableManager;
 
         private void Start()
         {
             lives = availableLives;
             ballManager = HawkBallsManager.Instance;
             brickManager = HawkBrickManager.Instance;
+            collectableManager = HawkCollectableManager.Instance;
 
             Screen.SetResolution(540, 900, false);
             HawkBall.onDeath += onDeath;
@@ -99,6 +101,7 @@ namespace Hawk
             return levelsTemp;
         }
 
+        // All lives lost. Clear everything then show death screen
         void onDeath(HawkBall ball)
         {
             if (ballManager.balls.Count <= 0)
@@ -115,23 +118,31 @@ namespace Hawk
                     // stop game
                     // reload level
                     ballManager.resetBalls();
+                    // Clear any remaining collectables
+                    collectableManager.resetCollectables();
+
                     isgameStarted = false;
                     brickManager.reloadBricks();
                 }
             }
         }
 
+        // Check if there are no more bricks then load next level.
+        // TODO(shf): Brick is not used do we need it for this?
         void brickDestruction(HawkBrick brick)
         {
             if (brickManager.remainingBricks.Count <= 0)
             {
                 // cleared level
                 ballManager.resetBalls();
+                collectableManager.resetCollectables();
+
                 isgameStarted = false;
                 loadNextLevel();
             }
         }
 
+        // Set up the next level or show victory screen
         void loadNextLevel()
         {
             currentLevel++;
@@ -143,6 +154,7 @@ namespace Hawk
             {
                 brickManager.setLevel(currentLevel);
                 brickManager.reloadBricks();
+                collectableManager.resetCollectables();
             }
         }
 
