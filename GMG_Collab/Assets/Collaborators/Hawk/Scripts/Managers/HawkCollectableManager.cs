@@ -25,6 +25,9 @@ namespace Hawk
         public List<HawkCollectable> availableBuffs;
         public List<HawkCollectable> availableDeBuffs;
 
+        // TODO(shf): List of all live buffs and debuffs and
+        // deleting them #onDeath or when game ends or level is beat.
+
         [Range(0, 100)]
         public float buffChance;
         [Range(0, 100)]
