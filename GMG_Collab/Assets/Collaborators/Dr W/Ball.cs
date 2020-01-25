@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Coreys_Work
+namespace DRW
 {
-    public class Brick : MonoBehaviour
+    public class Ball : MonoBehaviour
     {
         // Start is called before the first frame update
         void Start()
@@ -16,11 +16,6 @@ namespace Coreys_Work
         void Update()
         {
 
-        }
-
-        public void DropPowerUp()
-        {
-            GameManager.TheGameManager.SpawnPowerUp(transform.position);
         }
     }
 }

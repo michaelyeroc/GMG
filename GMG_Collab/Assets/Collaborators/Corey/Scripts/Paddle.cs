@@ -13,10 +13,13 @@ namespace Coreys_Work
         [SerializeField]
         float m_PaddleSpeed = 200f;
 
+        Vector3 m_StartPos;
+
         // Start is called before the first frame update
         void Start()
         {
             m_PaddleRigidbody = GetComponent<Rigidbody2D>();
+            m_StartPos = transform.position;
         }
 
         // Update is called once per frame
@@ -35,6 +38,21 @@ namespace Coreys_Work
                     newVelocity.x += m_PaddleSpeed;
 
                 m_PaddleRigidbody.velocity = newVelocity;
+            }
+        }
+
+        public void ResetPaddle()
+        {
+            transform.position = m_StartPos;
+            m_PaddleRigidbody.velocity = Vector2.zero;
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.name == "PowerUp(Clone)")
+            {
+                Debug.Log("Power Up Picked Up");
+                Destroy(collision.gameObject);
             }
         }
     }
