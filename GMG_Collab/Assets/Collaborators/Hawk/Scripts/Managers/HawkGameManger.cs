@@ -107,6 +107,8 @@ namespace Hawk
             if (ballManager.balls.Count <= 0)
             {
                 lives--;
+                collectableManager.resetCollectables();
+
                 if (lives < 1)
                 {
                     gameOverScreen.SetActive(true);
@@ -118,8 +120,6 @@ namespace Hawk
                     // stop game
                     // reload level
                     ballManager.resetBalls();
-                    // Clear any remaining collectables
-                    collectableManager.resetCollectables();
 
                     isgameStarted = false;
                     brickManager.reloadBricks();

@@ -1501,7 +1501,7 @@ MonoBehaviour:
   availableBuffs:
   - {fileID: 1691735693592588424, guid: ebea1f4e28526d34eb7164db878d6afd, type: 3}
   availableDeBuffs: []
-  buffChance: 75
+  buffChance: 100
   debuffChance: 0
 --- !u!1 &1319933695
 GameObject:
