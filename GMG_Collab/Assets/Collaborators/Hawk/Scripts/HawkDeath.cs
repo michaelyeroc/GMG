@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Hawk
 {
@@ -21,7 +19,7 @@ namespace Hawk
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.tag == "HawkBall")
+            if (collision.tag.Equals("HawkBall"))
             {
                 HawkBall ball = collision.GetComponent<HawkBall>();
                 ballManager.balls.Remove(ball);

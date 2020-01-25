@@ -59,7 +59,7 @@ namespace Hawk
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision.gameObject.tag == "HawkBall")
+            if (collision.gameObject.tag.Equals("HawkBall"))
             {
                 Rigidbody2D ballRb = collision.gameObject.GetComponent<Rigidbody2D>();
 

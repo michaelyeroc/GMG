@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Hawk
@@ -22,6 +19,10 @@ namespace Hawk
             {
                 Instance = this;
             }
+            // get instance of managers
+            gameManager = HawkGameManger.Instance;
+            brickManager = HawkBrickManager.Instance;
+
             // Event subscriptions
             HawkBrick.onBrickDestruction += onBrickDestruciton;
             HawkBrickManager.onBricksLoaded += onBricksLoaded;
@@ -41,9 +42,6 @@ namespace Hawk
         // Start is called before the first frame update
         void Start()
         {
-            gameManager = HawkGameManger.Instance;
-            brickManager = HawkBrickManager.Instance;
-
             onLifeLost(gameManager.availableLives);
             // For when we restart level
             // TODO(shf): We can probably do better
