@@ -8,6 +8,8 @@ TagManager:
   - deathwall
   - paddle
   - Wall
+  - KBrick
+  - KPowerUp
   layers:
   - Default
   - TransparentFX
