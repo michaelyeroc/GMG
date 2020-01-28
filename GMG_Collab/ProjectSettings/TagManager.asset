@@ -10,6 +10,7 @@ TagManager:
   - Wall
   - KBrick
   - KPowerUp
+  - Brick
   layers:
   - Default
   - TransparentFX

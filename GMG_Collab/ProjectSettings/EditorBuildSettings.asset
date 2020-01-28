@@ -12,12 +12,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Corey's Scene.unity
     guid: 01106339814081c46b5f6bb5552ec055
   - enabled: 1
-    path: Assets/Scenes/Test Scene.unity
-    guid: e3b082d4c26dec14b8acc4e29c09ea6b
-  - enabled: 1
     path: Assets/Scenes/Hawks Scene.unity
     guid: 0a954560494e49a46b3a09a1c33885cc
   - enabled: 1
     path: Assets/Scenes/Gary's Scene.unity
     guid: 5df4bba5f1cd744cfa27c44f38d8a666
+  - enabled: 1
+    path: Assets/Scenes/RainbowK's Scene.unity
+    guid: 5e8e2bbee7454482fbb81851d4aad305
   m_configObjects: {}
