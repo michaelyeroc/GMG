@@ -8,6 +8,7 @@ TagManager:
   - deathwall
   - paddle
   - Wall
+  - Brick
   layers:
   - Default
   - TransparentFX

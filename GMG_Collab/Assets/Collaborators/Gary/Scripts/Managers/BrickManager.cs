@@ -1,6 +1,6 @@
 ﻿#region File Description
 //-----------------------------------------------------------------------------
-// PuckMovement.cs
+// BrickManager.cs
 //
 // Copyright (C) Allegro Interactive. All rights reserved.
 //-----------------------------------------------------------------------------
@@ -12,19 +12,18 @@ using UnityEngine;
 
 namespace Garys_Work
 {
-    [RequireComponent(typeof(Rigidbody2D))]
-    public class PuckMovement : MonoBehaviour
+    public class BrickManager : MonoBehaviour
     {	
         
     #region fields
         bool isActive = true;
-        bool moveActive;
-        
-        Rigidbody2D ballRigidBody;
+       
     #endregion
         
     #region properties
-        public float MovementSpeed;
+        public GameObject brickPrefab;
+        public GameObject brickParent;
+        public Vector3 brickFieldAnchor;
     #endregion
         
         void OnEnable() 
@@ -43,10 +42,7 @@ namespace Garys_Work
 
         void LevelStartEvent() 
         {
-            moveActive = true;  
-            isActive = true; 
-            
-            ballRigidBody.velocity = new Vector2(MovementSpeed/2, MovementSpeed);
+            isActive = true;
         }
 
         void LevelStopEvent() 
@@ -57,37 +53,45 @@ namespace Garys_Work
         // Start is called before the first frame update
         void Start()
         {
-            moveActive = false;  
             isActive = false; 
-            
-            ballRigidBody = GetComponent<Rigidbody2D>();
+            CreateBrickField(brickParent, brickPrefab, brickFieldAnchor);
         }
 
         // Update is called once per frame
         void Update()
         {
-            if ( moveActive && isActive )
+            if ( isActive )
             {
             }
+
         }
 
         void FixedUpdate() 
         {
         }
 
-        public void StartMovement() 
+        void CreateBrickField(GameObject parent, GameObject prefab, Vector3 firstBrickPos)
         {
-            moveActive = true;
+            GameObject newEnemy;
+            Vector3 nextPos;
+            float brickWidth = 0.8f;
+            float brickHeight = -0.2f;
+            
+            int rowCnt = 3;
+            int colCnt = 5;
+            for( int j = 0; j <= rowCnt; j++)
+            {
+                for( int i = 0; i <= colCnt; i++)
+                {
+                    nextPos = new Vector3(brickWidth * i, brickHeight * j, 0)  + firstBrickPos;
+                    newEnemy = Instantiate(prefab, nextPos, Quaternion.identity);
+                    //newEnemy.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0.0f, 359.0f));
+                    newEnemy.transform.SetParent(parent.transform);
+                }
+            }
+           
+          
         }
 
-        void OnTriggerEnter2D(Collider2D other)
-        {
-           //EventManager.DebugLog("OnTriggerEnter2D()", other.transform.name);
-        }
-
-        void OnCollisionEnter2D( Collision2D collision)
-        {
-            //Vector3 newDirection =  Vector3.Reflect(transform.up,  collision.contacts[0].normal);    
-        }
     }
 }
