@@ -27,6 +27,10 @@ namespace Coreys_Work
 
         [SerializeField]
         GameObject m_GamePieces;
+
+        //[SerializeField]
+        //Text m_LivesText;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -34,6 +38,7 @@ namespace Coreys_Work
             {
                 TheGameManager = this;
             }
+            SelectBricksForPowerUp();
         }
 
         // Update is called once per frame
@@ -99,7 +104,16 @@ namespace Coreys_Work
 
         public void QuitGame()
         {
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("Main Menu");
+        }
+
+        void SelectBricksForPowerUp()
+        {
+            foreach (Brick brick in m_Bricks)
+            {
+                if (Random.Range(0, 10) >= 5)
+                    brick.CanDrop = true;
+            }
         }
     }
 }
