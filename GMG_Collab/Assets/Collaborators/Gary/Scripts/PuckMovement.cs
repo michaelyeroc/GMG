@@ -21,6 +21,9 @@ namespace Garys_Work
         bool moveActive;
         
         Rigidbody2D ballRigidBody;
+
+        Vector2 inDirection;
+
     #endregion
         
     #region properties
@@ -46,7 +49,9 @@ namespace Garys_Work
             moveActive = true;  
             isActive = true; 
             
-            ballRigidBody.velocity = new Vector2(MovementSpeed/2, MovementSpeed);
+            //ballRigidBody.velocity = new Vector2(MovementSpeed/2, MovementSpeed);
+            
+            inDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         }
 
         void LevelStopEvent() 
@@ -73,6 +78,7 @@ namespace Garys_Work
 
         void FixedUpdate() 
         {
+            transform.Translate(inDirection * MovementSpeed/10, Space.World);
         }
 
         public void StartMovement() 
@@ -87,7 +93,17 @@ namespace Garys_Work
 
         void OnCollisionEnter2D( Collision2D collision)
         {
-            //Vector3 newDirection =  Vector3.Reflect(transform.up,  collision.contacts[0].normal);    
+            //Vector3 newDirection =  Vector3.Reflect(transform.up,  collision.contacts[0].normal);  
+            
+            var contactPoint = collision.contacts[0].point;
+            Vector2 ballLocation = transform.position;
+            var inNormal = (ballLocation - contactPoint).normalized;
+            inDirection = Vector2.Reflect(inDirection, inNormal);
+
+            if ( collision.transform.tag == "Brick")
+            {
+                Destroy(collision.gameObject);
+            }  
         }
     }
 }

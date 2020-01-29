@@ -21,9 +21,11 @@ namespace Garys_Work
     #endregion
         
     #region properties
-        public GameObject brickPrefab;
-        public GameObject brickParent;
-        public Vector3 brickFieldAnchor;
+        public GameObject BrickPrefab;
+        public GameObject BrickParent;
+        public Vector3 BrickFieldAnchor;
+
+        public Color[] RowColor; //= {Color.yellow, Color.red, Color.magenta, Color.blue, Color.green};
     #endregion
         
         void OnEnable() 
@@ -54,7 +56,7 @@ namespace Garys_Work
         void Start()
         {
             isActive = false; 
-            CreateBrickField(brickParent, brickPrefab, brickFieldAnchor);
+            CreateBrickField(BrickParent, BrickPrefab, BrickFieldAnchor);
         }
 
         // Update is called once per frame
@@ -72,21 +74,31 @@ namespace Garys_Work
 
         void CreateBrickField(GameObject parent, GameObject prefab, Vector3 firstBrickPos)
         {
-            GameObject newEnemy;
+            GameObject newBrick;
             Vector3 nextPos;
             float brickWidth = 0.8f;
             float brickHeight = -0.2f;
             
-            int rowCnt = 3;
+            int rowCnt = 4;
             int colCnt = 5;
+            int brickId = 1;
+
             for( int j = 0; j <= rowCnt; j++)
             {
                 for( int i = 0; i <= colCnt; i++)
                 {
                     nextPos = new Vector3(brickWidth * i, brickHeight * j, 0)  + firstBrickPos;
-                    newEnemy = Instantiate(prefab, nextPos, Quaternion.identity);
+                    newBrick = Instantiate(prefab, nextPos, Quaternion.identity);
                     //newEnemy.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0.0f, 359.0f));
-                    newEnemy.transform.SetParent(parent.transform);
+                    newBrick.transform.SetParent(parent.transform);
+                    newBrick.GetComponent<BrickHandler>().BrickId = brickId++;
+                    newBrick.transform.name = prefab.transform.name;
+                    
+                    newBrick. GetComponent<SpriteRenderer>().material.SetColor("_Color", new Color(
+                                                                                            RowColor[j].r,
+                                                                                            RowColor[j].g,
+                                                                                            RowColor[j].b, 
+                                                                                            1.0f));
                 }
             }
            

@@ -435,10 +435,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a95eac840e9e44cabbd437eeed4a70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brickPrefab: {fileID: 3395479323778095349, guid: 10b166b77af602f4d9aa6abf8809e4a3,
+  BrickPrefab: {fileID: 3395479323778095349, guid: 10b166b77af602f4d9aa6abf8809e4a3,
     type: 3}
-  brickParent: {fileID: 601475288}
-  brickFieldAnchor: {x: -2, y: 2, z: 0}
+  BrickParent: {fileID: 601475288}
+  BrickFieldAnchor: {x: -2, y: 2, z: 0}
+  RowColor:
+  - {r: 1, g: 0.9175284, b: 0, a: 0}
+  - {r: 1, g: 0.33871907, b: 0, a: 0}
+  - {r: 1, g: 0, b: 0.20258236, a: 0}
+  - {r: 0, g: 0.024693727, b: 1, a: 0}
+  - {r: 0, g: 1, b: 0.0024728775, a: 0}
 --- !u!1 &339417146
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,7 +1219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 390951dd01bd13c409544a6b6e09128e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 2
+  MovementSpeed: 1
 --- !u!50 &1561360223
 Rigidbody2D:
   serializedVersion: 4
@@ -1299,7 +1305,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
+        value: 0.04347229
         inSlope: 0.3104027
         outSlope: 0.3104027
         tangentMode: 0
@@ -1308,7 +1314,7 @@ TrailRenderer:
         outWeight: 0.15873016
       - serializedVersion: 3
         time: 1
-        value: 0
+        value: 0.05796814
         inSlope: 0
         outSlope: 0
         tangentMode: 0
