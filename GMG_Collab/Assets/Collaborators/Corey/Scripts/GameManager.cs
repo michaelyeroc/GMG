@@ -99,7 +99,7 @@ namespace Coreys_Work
 
         public void QuitGame()
         {
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("Main Menu");
         }
     }
 }
