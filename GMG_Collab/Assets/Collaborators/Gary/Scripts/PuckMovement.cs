@@ -73,12 +73,13 @@ namespace Garys_Work
         {
             if ( moveActive && isActive )
             {
+                transform.Translate(inDirection * MovementSpeed * Time.deltaTime);
             }
         }
 
         void FixedUpdate() 
         {
-            transform.Translate(inDirection * MovementSpeed/10, Space.World);
+           
         }
 
         public void StartMovement() 
