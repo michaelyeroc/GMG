@@ -69,6 +69,8 @@ namespace Coreys_Work
                             contact.collider.GetComponent<Brick>().DropPowerUp();
                             contact.collider.gameObject.SetActive(false);
                         }
+                        if (GetComponent<AudioSource>() != null)
+                            GetComponent<AudioSource>().Play();
                         break;
                     case "Bottom Bounds":
                         Debug.Log("Hit Bottom");

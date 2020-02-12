@@ -44,7 +44,8 @@ namespace Coreys_Work
         public void ResetPaddle()
         {
             transform.position = m_StartPos;
-            m_PaddleRigidbody.velocity = Vector2.zero;
+            if (m_PaddleRigidbody != null)
+                m_PaddleRigidbody.velocity = Vector2.zero;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
