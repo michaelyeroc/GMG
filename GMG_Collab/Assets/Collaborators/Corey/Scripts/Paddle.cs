@@ -26,16 +26,26 @@ namespace Coreys_Work
         void Update()
         {
             if (m_Ball != null && m_Ball.BallMoving == false && Input.GetKeyDown(KeyCode.Space))
-                m_Ball.LaunchBall();
+                m_Ball.LaunchBall(0, 1);
 
             if (m_Ball != null && m_Ball.BallMoving)
             {
                 Vector2 newVelocity = Vector2.zero;
 
-                if (Input.GetKey(KeyCode.LeftArrow))
-                    newVelocity.x += -m_PaddleSpeed;
-                if (Input.GetKey(KeyCode.RightArrow))
-                    newVelocity.x += m_PaddleSpeed;
+                if (GameManager.TheGameManager.CurrentGameType == GameType.BREAKOUT)
+                {
+                    if (Input.GetKey(KeyCode.LeftArrow))
+                        newVelocity.x += -m_PaddleSpeed;
+                    if (Input.GetKey(KeyCode.RightArrow))
+                        newVelocity.x += m_PaddleSpeed;
+                }
+                else if (GameManager.TheGameManager.CurrentGameType == GameType.PONG)
+                {
+                    if (Input.GetKey(KeyCode.UpArrow))
+                        newVelocity.y += m_PaddleSpeed;
+                    if (Input.GetKey(KeyCode.DownArrow))
+                        newVelocity.y += -m_PaddleSpeed;
+                }
 
                 m_PaddleRigidbody.velocity = newVelocity;
             }

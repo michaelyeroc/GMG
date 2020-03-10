@@ -19,6 +19,18 @@ namespace Coreys_Work
         {
             m_BallRigidBody = GetComponent<Rigidbody2D>();
             m_StartPos = transform.position;
+
+            if (GameManager.TheGameManager.CurrentGameType == GameType.PONG)
+            {
+                int dirX = 1;
+                if (Random.value < .5)
+                    dirX = -1;
+
+                int dirY = 1;
+                if (Random.value < .5)
+                    dirY = -1;
+                LaunchBall(dirX, dirY);
+            }
         }
 
         // Update is called once per frame
@@ -27,10 +39,10 @@ namespace Coreys_Work
 
         }
 
-        public void LaunchBall()
+        public void LaunchBall(int dirX, int dirY)
         {
             BallMoving = true;
-            m_BallRigidBody.velocity = new Vector2(0, m_BallSpeed);
+            m_BallRigidBody.velocity = new Vector2(dirX * m_BallSpeed, dirY * m_BallSpeed);
         }
 
         public void ResetBall()
@@ -76,23 +88,23 @@ namespace Coreys_Work
                         Debug.Log("Hit Bottom");
                         break;
                     case "Paddle (1)":
-                        Vector3 hitPoint = contact.point;
+                        //Vector3 hitPoint = contact.point;
 
-                        Vector3 paddleCenter = new Vector3(contact.collider.gameObject.transform.position.x, contact.collider.gameObject.transform.position.y);
+                        //Vector3 paddleCenter = new Vector3(contact.collider.gameObject.transform.position.x, contact.collider.gameObject.transform.position.y);
 
-                        m_BallRigidBody.velocity = Vector2.zero;
+                        //m_BallRigidBody.velocity = Vector2.zero;
 
-                        float difference = paddleCenter.x - hitPoint.x;
-                        
-                        if (hitPoint.x < paddleCenter.x)
-                        {
-                            // left side of paddle
-                            m_BallRigidBody.velocity = new Vector2(-Mathf.Abs(difference * m_BallSpeed), m_BallSpeed);
-                        }
-                        else
-                        {
-                            m_BallRigidBody.velocity = new Vector2(Mathf.Abs(difference * m_BallSpeed), m_BallSpeed);
-                        }
+                        //float difference = paddleCenter.x - hitPoint.x;
+
+                        //if (hitPoint.x < paddleCenter.x)
+                        //{
+                        //    // left side of paddle
+                        //    m_BallRigidBody.velocity = new Vector2(-Mathf.Abs(difference * m_BallSpeed), m_BallSpeed);
+                        //}
+                        //else
+                        //{
+                        //    m_BallRigidBody.velocity = new Vector2(Mathf.Abs(difference * m_BallSpeed), m_BallSpeed);
+                        //}
                         break;
                 }
             }
