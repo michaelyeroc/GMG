@@ -61,3 +61,7 @@ crashlytics-build.properties
 GMG_Collab/Assets/Collaborators/.DS_Store
 GMG_Collab/Assets/Scenes/.DS_Store
 GMG_Collab/Assets/Collaborators/Corey/.DS_Store
+
+# Intellij Files
+*.idea
+GMG_Collab_Java/**/libs/
