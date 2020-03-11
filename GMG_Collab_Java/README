@@ -13,11 +13,14 @@ yet we recommend using the libraries mentioned in this document.**
 
 ### 2D Gaming Development
 
-For 2D development the *Slick2D* library offers an easy integration
-for simple 2D games coded in Java and will be the main starting
-library for game development.
-
 ### 3D Gaming Development
 
 We have not yet started working on 3D game development
 yet but the current library up for consideration is *libGDX*.
+
+## Intellij IDE
+
+If you don't have Intellij you can go to
+*https://www.jetbrains.com/idea/download/*
+and download the IDE exacutable to install it on your
+machine.
