@@ -11,12 +11,8 @@ import org.mini2Dx.core.graphics.Graphics;
 public class PongMain extends BasicGame {
     @Override
     public void initialise() {
-        player = new Rectangle(5, HEIGHT / 2f, 10, 80);
-        cpu = new Rectangle(WIDTH - 15, HEIGHT / 2f, 10, 80);
-        ball = new Circle(WIDTH / 2f, HEIGHT / 2f, 6);
-        ballVelocity = new Vector2(vectorX, vectorY);
-
-        ball = new Circle(WIDTH / 2f, HEIGHT / 2f, 6);
+        // Send the ball at the player with no vertical movement
+        ballVelocity.set(new Vector2(vectorX, 0));
     }
 
     @Override
@@ -26,9 +22,9 @@ public class PongMain extends BasicGame {
 
     @Override
     public void render(final Graphics g) {
-        player.fill(g);
-        cpu.fill(g);
-        ball.fill(g);
+        g.fillShape(player);
+        g.fillShape(cpu);
+        g.fillShape(ball);
     }
 
     @Override
@@ -52,11 +48,11 @@ public class PongMain extends BasicGame {
     private void handlePlayerMovement() {
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             if (player.getMinY() > 0) {
-                player.setY(player.getY() - 10f);
+                player.setY(player.getY() - 5f);
             }
         } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             if (player.getMaxY() < HEIGHT) {
-                player.setY(player.getY() + 10f);
+                player.setY(player.getY() + 5f);
             }
         }
     }
@@ -71,12 +67,6 @@ public class PongMain extends BasicGame {
     }
 
     private void handlePaddleCollision() {
-        // Using centerY, minY, && maxY, we could do similar logic as unity game
-        //  for collision and changing Vector direction. maxY() is bottom of paddle, minY() is top
-        //  centerY is middle of paddle. They change based on the position of the paddle in the window (0-480/489)
-        // because window border adds 9 that the paddle goes past right now.
-
-        // TO GET DIFFERENCE take paddle.getcenterY - ball.getcenterY and return absolute value
         if (ball.intersects(player)) {
             // Set Y to zero to be able to shoot up or down when colliding with
             //  upper or lower part of paddle.
@@ -85,9 +75,9 @@ public class PongMain extends BasicGame {
             final float diff = Math.abs(player.getCenterY() - ball.getCenterY());
             if (ball.getCenterY() < player.getCenterY()) {
                 // TOP half of paddle
-                ballVelocity = new Vector2(-ballVelocity.x, -Math.abs(diff / vectorY));
+                ballVelocity.set(new Vector2(-ballVelocity.x, -Math.abs(diff / vectorY)));
             } else {
-                ballVelocity = new Vector2(-ballVelocity.x, Math.abs(diff / vectorY));
+                ballVelocity.set(new Vector2(-ballVelocity.x, Math.abs(diff / vectorY)));
             }
         }
         if (ball.intersects(cpu)) {
@@ -106,15 +96,16 @@ public class PongMain extends BasicGame {
         }
     }
 
-    private Circle ball;
-    private Rectangle player;
-    private Rectangle cpu;
-    private Vector2 ballVelocity;
+    private final Vector2 ballVelocity = new Vector2(0, 0);
+    private final Circle ball = new Circle(WIDTH / 2f, HEIGHT / 2f, 6);
+    private final Rectangle player = new Rectangle(5, HEIGHT / 2f, 10, 80);
+    private final Rectangle cpu = new Rectangle(WIDTH - 15, HEIGHT / 2f, 10, 80);
+
+    private int playerScore = 0;
+    private int cpuScore = 0;
+
     private static final float vectorX = -5;
     private static final float vectorY = 3;
-
-    private int playerScore;
-    private int cpuScore;
 
     public static final int WIDTH = 900;
     public static final int HEIGHT = 480;
