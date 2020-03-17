@@ -13,6 +13,10 @@ yet we recommend using the libraries mentioned in this document.**
 
 ### 2D Gaming Development
 
+Current library that will be used is Mini2Dx.
+You can download the latest Mini2Dx project generator
+from *https://mini2dx.org/*.
+
 ### 3D Gaming Development
 
 We have not yet started working on 3D game development
@@ -24,3 +28,5 @@ If you don't have Intellij you can go to
 *https://www.jetbrains.com/idea/download/*
 and download the IDE exacutable to install it on your
 machine.
+
+## Generating a New Project
