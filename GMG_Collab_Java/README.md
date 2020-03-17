@@ -15,17 +15,17 @@ yet we recommend using the libraries mentioned in this document.**
 
 Current library that will be used is Mini2Dx.
 You can download the latest Mini2Dx project generator
-from *https://mini2dx.org/*.
+from https://mini2dx.org/.
 
 ### 3D Gaming Development
 
 We have not yet started working on 3D game development
-yet but the current library up for consideration is *libGDX*.
+yet but the current library up for consideration is **libGDX**.
 
 ## Intellij IDE
 
 If you don't have Intellij you can go to
-*https://www.jetbrains.com/idea/download/*
+https://www.jetbrains.com/idea/download/
 and download the IDE exacutable to install it on your
 machine.
 
