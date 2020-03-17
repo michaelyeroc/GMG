@@ -64,4 +64,4 @@ GMG_Collab/Assets/Collaborators/Corey/.DS_Store
 
 # Intellij Files
 *.idea
-GMG_Collab_Java/**/libs/
+GMG_Collab_Java/**/build/
