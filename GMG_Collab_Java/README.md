@@ -13,7 +13,7 @@ yet we recommend using the libraries mentioned in this document.**
 
 ### 2D Gaming Development
 
-Current library that will be used is Mini2Dx.
+Current library that will be using is Mini2Dx.
 You can download the latest Mini2Dx project generator
 from https://mini2dx.org/.
 
