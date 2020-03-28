@@ -35,14 +35,16 @@ public class PongMain extends BasicGame {
         handlePlayerMovement();
         ball.set(ball.getX() + ballVelocity.x, ball.getY() + ballVelocity.y);
 
-        handleUpperAndLowerBoundCollision();
-        handlePaddleCollision();
-        handleBallScore();
+        cpuMovement();
+        upperLowerBoundCollision();
+        paddleCollision();
+        ballScore();
+    }
 
+    private void cpuMovement() {
         // paddles always following Y pos of ball
         float followBall = ball.getCenterY() - cpu.getHeight() / 2 - 7;
         cpu.setY(followBall);
-//        player.setY(followBall);
     }
 
     private void handlePlayerMovement() {
@@ -57,7 +59,7 @@ public class PongMain extends BasicGame {
         }
     }
 
-    private void handleUpperAndLowerBoundCollision() {
+    private void upperLowerBoundCollision() {
         if (ball.getMinY() <= 0) {
             ballVelocity.y = -ballVelocity.y;
         }
@@ -66,7 +68,7 @@ public class PongMain extends BasicGame {
         }
     }
 
-    private void handlePaddleCollision() {
+    private void paddleCollision() {
         if (ball.intersects(player)) {
             // Set Y to zero to be able to shoot up or down when colliding with
             //  upper or lower part of paddle.
@@ -85,7 +87,7 @@ public class PongMain extends BasicGame {
         }
     }
 
-    private void handleBallScore() {
+    private void ballScore() {
         if (ball.getMinX() <= 0) {
             ballVelocity.x = -ballVelocity.x;
             cpuScore++;
