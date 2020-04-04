@@ -8,107 +8,159 @@ import org.mini2Dx.core.geom.Circle;
 import org.mini2Dx.core.geom.Rectangle;
 import org.mini2Dx.core.graphics.Graphics;
 
-public class PongMain extends BasicGame {
-    @Override
-    public void initialise() {
-        // Send the ball at the player with no vertical movement
-        ballVelocity.set(new Vector2(vectorX, 0));
+public final class PongMain extends BasicGame
+{
+    public static final class Factory
+    {
+        private final int width;
+        private final int height;
+
+        public Factory(
+                final int width,
+                final int height)
+        {
+            this.width = width;
+            this.height = height;
+        }
+
+        // This won't work for window resizing so window size stuff
+        //  would have to be mutable and these wouldn't be passed in
+        public PongMain pong()
+        {
+            return new PongMain(width, height);
+        }
     }
 
     @Override
-    public void update(final float delta) {
+    public void initialise()
+    {
+        // Initialize the ball moving at the player with no vertical movement
+        ballVelocity.set(new Vector2(vectorX, 0));
+
+        cpu = cpuFactory.newCpuPaddle();
+    }
+
+    @Override
+    public void update(final float delta)
+    {
         gameFlow();
     }
 
     @Override
-    public void render(final Graphics g) {
+    public void render(final Graphics g)
+    {
         g.fillShape(player);
-        g.fillShape(cpu);
+        g.fillShape(cpu.shape());
         g.fillShape(ball);
     }
 
     @Override
-    public void interpolate(final float alpha) {
+    public void interpolate(final float alpha)
+    {
     }
 
-    private void gameFlow() {
+    private void gameFlow()
+    {
         handlePlayerMovement();
         ball.set(ball.getX() + ballVelocity.x, ball.getY() + ballVelocity.y);
 
-        cpuMovement();
+        cpu.cpuMovement(ball);
         upperLowerBoundCollision();
         paddleCollision();
         ballScore();
     }
 
-    private void cpuMovement() {
-        // paddles always following Y pos of ball
-        float followBall = ball.getCenterY() - cpu.getHeight() / 2 - 7;
-        cpu.setY(followBall);
-    }
-
-    private void handlePlayerMovement() {
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            if (player.getMinY() > 0) {
+    private void handlePlayerMovement()
+    {
+        if(Gdx.input.isKeyPressed(Input.Keys.UP))
+        {
+            if(player.getMinY() > 0)
+            {
                 player.setY(player.getY() - 5f);
             }
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            if (player.getMaxY() < HEIGHT) {
+        } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
+        {
+            if(player.getMaxY() < HEIGHT)
+            {
                 player.setY(player.getY() + 5f);
             }
         }
     }
 
-    private void upperLowerBoundCollision() {
-        if (ball.getMinY() <= 0) {
+    private void upperLowerBoundCollision()
+    {
+        if(ball.getMinY() <= 0)
+        {
             ballVelocity.y = -ballVelocity.y;
         }
-        if (ball.getMaxY() >= HEIGHT) {
+        if(ball.getMaxY() >= HEIGHT)
+        {
             ballVelocity.y = -ballVelocity.y;
         }
     }
 
-    private void paddleCollision() {
-        if (ball.intersects(player)) {
+    private void paddleCollision()
+    {
+        if(ball.intersects(player))
+        {
             // Set Y to zero to be able to shoot up or down when colliding with
             //  upper or lower part of paddle.
             ballVelocity.y = 0;
 
             final float diff = Math.abs(player.getCenterY() - ball.getCenterY());
-            if (ball.getCenterY() < player.getCenterY()) {
+            if(ball.getCenterY() < player.getCenterY())
+            {
                 // TOP half of paddle
                 ballVelocity.set(new Vector2(-ballVelocity.x, -Math.abs(diff / vectorY)));
-            } else {
+            } else
+            {
                 ballVelocity.set(new Vector2(-ballVelocity.x, Math.abs(diff / vectorY)));
             }
         }
-        if (ball.intersects(cpu)) {
+        if(ball.intersects(cpu.shape()))
+        {
             ballVelocity.x = -ballVelocity.x;
         }
     }
 
-    private void ballScore() {
-        if (ball.getMinX() <= 0) {
+    private void ballScore()
+    {
+        if(ball.getMinX() <= 0)
+        {
             ballVelocity.x = -ballVelocity.x;
-            cpuScore++;
+//            cpuScore++;
         }
-        if (ball.getMaxX() >= WIDTH) {
+        if(ball.getMaxX() >= WIDTH)
+        {
             ballVelocity.x = -ballVelocity.x;
-            playerScore++;
+//            playerScore++;
         }
     }
+
+    private PongMain(
+            final int width,
+            final int height)
+    {
+        this.WIDTH = width;
+        this.HEIGHT = height;
+        cpuFactory = new CpuPaddle.Factory(WIDTH, HEIGHT);
+        player = new Rectangle(5, HEIGHT / 2f, 10, 80);
+        ball = new Circle(WIDTH / 2f, HEIGHT / 2f, 6);
+    }
+
+    private final CpuPaddle.Factory cpuFactory;
 
     private final Vector2 ballVelocity = new Vector2(0, 0);
-    private final Circle ball = new Circle(WIDTH / 2f, HEIGHT / 2f, 6);
-    private final Rectangle player = new Rectangle(5, HEIGHT / 2f, 10, 80);
-    private final Rectangle cpu = new Rectangle(WIDTH - 15, HEIGHT / 2f, 10, 80);
+    private Rectangle player;
+    private Circle ball;
+    private CpuPaddle cpu;
 
-    private int playerScore = 0;
-    private int cpuScore = 0;
+    private final int WIDTH;
+    private final int HEIGHT;
+
+//    private int playerScore = 0;
+//    private int cpuScore = 0;
 
     private static final float vectorX = -5;
     private static final float vectorY = 3;
-
-    public static final int WIDTH = 900;
-    public static final int HEIGHT = 480;
 }
