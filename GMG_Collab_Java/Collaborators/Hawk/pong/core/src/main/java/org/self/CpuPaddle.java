@@ -10,9 +10,8 @@ final class CpuPaddle
         private final int width;
         private final int height;
 
-        public Factory(
-                final int width,
-                final int height)
+        public Factory(final int width,
+                       final int height)
         {
             this.width = width;
             this.height = height;
@@ -36,9 +35,8 @@ final class CpuPaddle
         return rectangle;
     }
 
-    private CpuPaddle(
-            final int width,
-            final int height)
+    private CpuPaddle(final int width,
+                      final int height)
     {
         rectangle = new Rectangle(width - 15, height / 2f, 10, 80);
     }
