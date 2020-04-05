@@ -48,6 +48,7 @@ public final class PongMain extends BasicGame
     @Override
     public void render(final Graphics g)
     {
+        centerRectangles(g);
         g.fillShape(player);
         g.fillShape(cpu.shape());
         g.fillShape(ball);
@@ -75,13 +76,13 @@ public final class PongMain extends BasicGame
         {
             if(player.getMinY() > 0)
             {
-                player.setY(player.getY() - 5f);
+                player.setY(player.getY() - playerMoveSpeed);
             }
         } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
         {
             if(player.getMaxY() < HEIGHT)
             {
-                player.setY(player.getY() + 5f);
+                player.setY(player.getY() + playerMoveSpeed);
             }
         }
     }
@@ -106,14 +107,16 @@ public final class PongMain extends BasicGame
             //  upper or lower part of paddle.
             ballVelocity.y = 0;
 
-            final float diff = Math.abs(player.getCenterY() - ball.getCenterY());
+            final float diff = Math.abs(player.getCenterY() - ball.getCenterY()) - 15;
+            final float x = -ballVelocity.x + 1;
+
             if(ball.getCenterY() < player.getCenterY())
             {
-                // TOP half of paddle
-                ballVelocity.set(new Vector2(-ballVelocity.x, -Math.abs(diff / vectorY)));
+                // Top half of paddle
+                ballVelocity.set(new Vector2(x, -Math.abs(diff / vectorY)));
             } else
             {
-                ballVelocity.set(new Vector2(-ballVelocity.x, Math.abs(diff / vectorY)));
+                ballVelocity.set(new Vector2(x, Math.abs(diff / vectorY)));
             }
         }
         if(ball.intersects(cpu.shape()))
@@ -127,12 +130,21 @@ public final class PongMain extends BasicGame
         if(ball.getMinX() <= 0)
         {
             ballVelocity.x = -ballVelocity.x;
-//            cpuScore++;
         }
         if(ball.getMaxX() >= WIDTH)
         {
             ballVelocity.x = -ballVelocity.x;
-//            playerScore++;
+        }
+    }
+
+    // For resizing this can't be in initialized block
+    //  has to be done in render each time
+    private void centerRectangles(final Graphics g)
+    {
+        final float recTopLeft = WIDTH / 2f - 10;
+        for(int y = 0; y < HEIGHT; y += 25)
+        {
+            g.fillShape(new Rectangle(recTopLeft, y, 10, 10));
         }
     }
 
@@ -146,19 +158,18 @@ public final class PongMain extends BasicGame
         ball = new Circle(WIDTH / 2f, HEIGHT / 2f, 6);
     }
 
-    private final CpuPaddle.Factory cpuFactory;
-
-    private final Vector2 ballVelocity = new Vector2(0, 0);
     private Rectangle player;
     private Circle ball;
     private CpuPaddle cpu;
 
+    private final Vector2 ballVelocity = new Vector2(0, 0);
+
+    private final CpuPaddle.Factory cpuFactory;
+
     private final int WIDTH;
     private final int HEIGHT;
 
-//    private int playerScore = 0;
-//    private int cpuScore = 0;
-
+    private static final float playerMoveSpeed = 7f;
     private static final float vectorX = -5;
     private static final float vectorY = 3;
 }
