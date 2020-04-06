@@ -35,8 +35,6 @@ public final class PongMain extends BasicGame
     {
         // Initialize the ball moving at the player with no vertical movement
         ballVelocity.set(new Vector2(vectorX, 0));
-
-        cpu = cpuFactory.newCpuPaddle();
     }
 
     @Override
@@ -148,6 +146,7 @@ public final class PongMain extends BasicGame
         }
     }
 
+    // Hmm this, initialize or both?
     private PongMain(final int width,
                      final int height)
     {
@@ -155,12 +154,13 @@ public final class PongMain extends BasicGame
         this.HEIGHT = height;
         cpuFactory = new CpuPaddle.Factory(WIDTH, HEIGHT);
         player = new Rectangle(5, HEIGHT / 2f, 10, 80);
+        cpu = cpuFactory.newCpuPaddle();
         ball = new Circle(WIDTH / 2f, HEIGHT / 2f, 6);
     }
 
-    private Rectangle player;
-    private Circle ball;
-    private CpuPaddle cpu;
+    private final Rectangle player;
+    private final Circle ball;
+    private final CpuPaddle cpu;
 
     private final Vector2 ballVelocity = new Vector2(0, 0);
 
