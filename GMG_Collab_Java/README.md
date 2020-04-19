@@ -44,9 +44,21 @@ machine.
 
 To download Mini2Dx project generator go to
 https://mini2dx.org and navigate to the download
-page. Once you download the project generator
-for your system and extract the files you are
-ready to create a new project.
+page. Once you download the files you will need
+to exract them to a directory of your choice. After
+extrcting the file navigate to the directory and
+run the project generator to make a new game.
 
 ## Creating a New Project
+
+Once you run the project generator you will
+be presented with a window with multiple options.
+The main options to focus on are
+naming your project, selecting a directory for the project files,
+and unchecking the Android and IOS checkboxes. We are unchecking
+these because we will only focus on desktop
+development and not have to worry about downloading the Android
+SDK, and IOS development which requires a Mac.
+
+## Importing The Project
 
